@@ -1,6 +1,4 @@
-package UoKCovid19TestBookingSystem;
-
-import java.util.Date;
+package UoKCovid19TestBookingSystem.mainModules;
 
 public class Room {
     // Attributes

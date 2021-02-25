@@ -1,4 +1,6 @@
-package UoKCovid19TestBookingSystem;
+package UoKCovid19TestBookingSystem.mainModules;
+
+import UoKCovid19TestBookingSystem.mainModules.Room;
 
 import java.util.*;
 

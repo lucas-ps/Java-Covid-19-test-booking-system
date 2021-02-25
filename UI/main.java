@@ -1,9 +1,11 @@
-package UoKCovid19TestBookingSystem;
+package UoKCovid19TestBookingSystem.UI;
+
+import UoKCovid19TestBookingSystem.mainModules.Assistant;
+import UoKCovid19TestBookingSystem.mainModules.Room;
 
 import java.util.Date;
-import java.time.*;
 
-import static UoKCovid19TestBookingSystem.helperFunctions.*;
+import static UoKCovid19TestBookingSystem.helperModules.helperFunctions.*;
 
 public class main {
 

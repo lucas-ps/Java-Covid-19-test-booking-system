@@ -1,4 +1,4 @@
-package UoKCovid19TestBookingSystem;
+package UoKCovid19TestBookingSystem.mainModules;
 
 import java.util.Date;
 
