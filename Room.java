@@ -1,5 +1,7 @@
 package UoKCovid19TestBookingSystem;
 
+import java.util.Date;
+
 public class Room {
     // Attributes
 
@@ -12,7 +14,23 @@ public class Room {
                 int capacity){
         this.code = code;
         this.capacity = capacity;
-    }
+        }
 
     // Methods
+
+    /**
+     * Get/Set methods
+     */
+
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * @return Formatted
+     */
+    public static String formattedBookableRooms(Room[] rooms){
+        return "";
+    }
+
 }
