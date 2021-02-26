@@ -2,21 +2,23 @@ package UoKCovid19TestBookingSystem.UI;
 
 import UoKCovid19TestBookingSystem.mainModules.Assistant;
 import UoKCovid19TestBookingSystem.mainModules.Room;
+import UoKCovid19TestBookingSystem.mainModules.UniversityResources;
 
-import java.util.Date;
+import java.util.*;
+import java.time.*;
 
 import static UoKCovid19TestBookingSystem.helperModules.helperFunctions.*;
 
-public class main {
+public class BookingManager {
 
     // TODO: Validate inputs
 
     public static void main(String[] args) {
 
     // Dummy data, remove
-    Room[] rooms = new Room[5];
-    Assistant[] assistants = new Assistant[5];
-    Date time = 2021-02-25;
+    ArrayList<Room> rooms = new ArrayList<>();
+    ArrayList<Assistant> assistants = new ArrayList<>();
+    LocalDateTime time = LocalDateTime.now();
 
         print("University of Knowledge - COVID test\n" +
                 "\n" +
@@ -31,33 +33,14 @@ public class main {
         }
 
         if (option == 1){
-            print(Room.formattedBookableRooms(rooms));
+            print(UniversityResources.formattedBookableRooms());
         }
         else if (option == 2){
-            String code = inputSTR("Please enter the new room's code");
-            int capacity = inputINT("Please enter the capacity of room " + code);
-            Room newRoom = new Room(code, capacity);
-            addRoom(newRoom);
-            print("Room " + code + "was successfully added");
+            UniversityResources.addRoom();
         }
         else if (option == 3){
-            Room[] roomArray = getBookableRooms(time, rooms);
-            print(Room.formattedBookableRooms(rooms));
-            int roomID = inputINT("\nChoose the corresponding ID of the room you'd like to remove");
-            Room roomToRemove = roomArray[roomID];
-            String roomName = roomToRemove.getCode();
-            removeRoom(roomToRemove);
-            print("Room "+ roomName +" was successfully removed");
-
-            // TODO: Remove appointments in specified removed room
-
+            UniversityResources.removeRoom();
         }
-    }
-
-    public static void addRoom(Room newRoom) {
-        int roomID = rooms.length;
-        roomID++;
-        // Create and add new room to rooms array
     }
 
     public static int mainMenu(){
@@ -84,17 +67,4 @@ public class main {
         int option = inputINT(mainMenu);
         return option;
     }
-
-    public static Room[] getBookableRooms(Date time, Room[] rooms){
-        for (Room room:rooms) {
-            // TODO: CHeck all rooms to see if they fit the time slot
-        }
-    }
-
-    public static Assistant[] getAvailableAssistants(Date time, Assistant[] assistants){
-        for (Assistant assistant:assistants) {
-            // TODO: Check all assistants to see if they fit the time slot
-        }
-    }
-
 }

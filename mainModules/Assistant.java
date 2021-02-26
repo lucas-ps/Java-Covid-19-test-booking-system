@@ -1,7 +1,5 @@
 package UoKCovid19TestBookingSystem.mainModules;
 
-import UoKCovid19TestBookingSystem.mainModules.Shift;
-
 public class Assistant {
 
     // Attributes
@@ -9,7 +7,6 @@ public class Assistant {
     private int ID;
     private String name;
     private String email;
-    private Shift[] shifts;
 
     // Constructor
 
@@ -22,4 +19,8 @@ public class Assistant {
     }
 
     // Methods
+
+    public int getID(){
+        return this.ID;
+    }
 }

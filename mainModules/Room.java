@@ -24,11 +24,7 @@ public class Room {
         return code;
     }
 
-    /**
-     * @return Formatted
-     */
-    public static String formattedBookableRooms(Room[] rooms){
-        return "";
+    public int getCapacity() {
+        return capacity;
     }
-
 }
