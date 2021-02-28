@@ -1,5 +1,7 @@
 package UoKCovid19TestBookingSystem.mainModules;
 
+import UoKCovid19TestBookingSystem.helperModules.RoomStatus;
+
 import java.util.ArrayList;
 
 import static UoKCovid19TestBookingSystem.helperModules.helperFunctions.*;
@@ -16,10 +18,10 @@ public class UniversityResources {
 
     // Constructor
 
-    public UniversityResources() {
+    public UniversityResources(ArrayList<Room> rooms, ArrayList<Assistant> assistants) {
 
-        this.assistants = new ArrayList<>();
-        this.rooms = new ArrayList<>();
+        this.assistants = rooms;
+        this.rooms = assistants;
     }
 
     // Methods
@@ -49,36 +51,40 @@ public class UniversityResources {
     /**
      * @return Formatted string with all bookable rooms and their details
      */
-    public static String formattedBookableRooms() {
-        return "";
+    public void formattedBookableRooms() {
+        print("");
+        // TODO: Formatted available rooms
     }
 
     /**
      * Removes a room from the rooms ArrayList
      */
     public void removeRoom() {
-        print(UniversityResources.formattedBookableRooms());
+        this.formattedBookableRooms();
         String roomCode = inputSTR("\nEnter the code of the room you'd like to remove");
         for (var i = 0; i < rooms.size(); i++) {
             if(rooms.get(i).getCode() == roomCode) {
-                rooms.remove(rooms.get(i));
+                rooms.remove(rooms[i]);
                 print("Room "+ roomCode +" was successfully removed");
                 // TODO: Remove all bookings in this room
             }
-            else if (i == rooms.size()) {
-                print("Room " + roomCode + " was not found on the system.");
-            }
         }
+        print("Room " + roomCode + " was not found on the system.");
     }
 
     /**
-     * Adds newRoom to rooms ArrayList
-     * @param newRoom room created by user
+     * Adds new room to rooms ArrayList, room created by user through inputs
      */
     public void addRoom() {
         String code = inputSTR("Please enter the new room's code");
         int capacity = inputINT("Please enter the capacity of room " + code);
-        Room newRoom = new Room(code, capacity);
+        String status = "";
+        while (!(status.equals("EMPTY"))||!(status.equals("AVAILABLE"))||!(status.equals("FULL")));
+            print ("Please enter a valid room status (EMPTY/AVAILABLE/FULL");
+            status = inputSTR("What is the status of room "+ code);
+        RoomStatus roomStatus = RoomStatus.valueOf(status);
+        // TODO: Not sure if that works, test it
+        Room newRoom = new Room(code, capacity, roomStatus);
         this.rooms.add(newRoom);
         print("Room " + code + "was successfully added");
     }
