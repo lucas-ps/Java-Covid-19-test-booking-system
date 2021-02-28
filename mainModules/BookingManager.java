@@ -23,7 +23,7 @@ public class BookingManager {
         ArrayList<Assistant> assistants = new ArrayList<>();
         ArrayList<Booking> bookings = new ArrayList<>();
 
-        UniversityResources UoK = new UniversityResources(rooms, assistants, bookings);
+        University UoK = new University(rooms, assistants, bookings);
         UoK.populateAssistants();
         UoK.populateRooms();
         mainMenu(UoK);
@@ -34,36 +34,41 @@ public class BookingManager {
      * Outputs main menu of the program and allows user to choose what they want to do
      * @param university UniversityResources object which stores the uni's rooms and assistant ArrayLists
      */
-    public static void mainMenu(UniversityResources university){
+    public static void mainMenu(University university){
+
+        // TODO: Check which assistants/rooms are available, update their status
+
         System.out.flush();
         int option = inputINT("University of Knowledge - COVID test\n" +
-         "\n" +
-         "Manage Bookings\n" +
-         "Please, enter the corresponding number to select your option:\n" +
-        "\n" +
-        "To manage Bookable Rooms:\n" +
-        "\t1. List\n" +
-        "\t2. Add\n" +
-        "\t3. Remove\n" +
-        "To manage Assistants on Shift:\n" +
-        "\t4. List\n" +
-        "\t5. Add\n" +
-        "\t6. Remove\n" +
-        "To manage Bookings:\n" +
-        "\t7. List\n" +
-        "\t8. Add\n" +
-        "\t9. Remove\n" +
-        "\t10. Conclude\n" +
-        "After selecting one the options above, you will be presented other screens.\n" +
-        "If you press 0, you will be able to return to this main menu.\n" +
-        "Press -1 (or ctrl+c) to quit this application.\n" +
-        "\n");
+                 "\n" +
+                 "Manage Bookings\n" +
+                 "Please, enter the corresponding number to select your option:\n" +
+                "\n" +
+                "To manage Bookable Rooms:\n" +
+                "\t1. List\n" +
+                "\t2. Add\n" +
+                "\t3. Remove\n" +
+                "To manage Assistants on Shift:\n" +
+                "\t4. List\n" +
+                "\t5. Add\n" +
+                "\t6. Remove\n" +
+                "To manage Bookings:\n" +
+                "\t7. List\n" +
+                "\t8. Add\n" +
+                "\t9. Remove\n" +
+                "\t10. Conclude\n" +
+                "After selecting one the options above, you will be presented other screens.\n" +
+                "If you press 0, you will be able to return to this main menu.\n" +
+                "Press -1 (or ctrl+c) to quit this application.\n" +
+                "\n" +
+                "Input: ");
 
         while (option > 10 | option < -1){
             option = inputINT(option + " is not a valid option. Please enter a valid option\n");
         }
 
-        if (option == 1) university.formattedBookableRooms();
+        if (option == 0) mainMenu(university);
+        else if (option == 1) university.formattedBookableRooms();
         else if (option == 2) university.addRoom();
         else if (option == 3) university.removeRoom();
         else if (option == 4) university.formattedAvailableAssistants();
@@ -75,5 +80,14 @@ public class BookingManager {
         else if (option == 10) university.concludeBooking();
         else if (option == -1) System.exit(0);
         // TODO: Stop program from ending after executing one of these
-    }
+
+        int input = 2;
+        while (input > 0 | input < -1) {
+            input = inputINT("Press 0 to go back to main menu or -1 (or ctrl+c) to quit this application.\n" +
+                    "Input: ");
+            if (input == 0) {
+                mainMenu(university);
+            } else System.exit(0);
+        }
+        }
 }

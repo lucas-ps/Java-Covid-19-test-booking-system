@@ -1,30 +1,33 @@
 package UoKCovid19TestBookingSystem.mainObjects;
 
-import java.time.Duration;
+import UoKCovid19TestBookingSystem.helperModules.BookingStatus;
+import UoKCovid19TestBookingSystem.helperModules.TimeSlot;
+
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Booking {
 
     // Attributes
 
-    private Date time;
     private Assistant assistantID;
     private Room room;
     private String studentEmail;
-    private Duration duration;
+    private TimeSlot timeSlot;
+    private BookingStatus status;
 
     // Constructor
 
-    public Booking(Date time,
-                   Assistant assistantID,
+    public Booking(Assistant assistantID,
                    Room room,
                    String studentEmail,
-                   Duration duration){
-        this.time = time;
+                   TimeSlot timeSlot,
+                   BookingStatus status){
         this.assistantID = assistantID;
         this.room = room;
         this.studentEmail = studentEmail;
-        this.duration = duration;
+        this.timeSlot = timeSlot;
+        this.status = status;
     }
 
     // Methods
