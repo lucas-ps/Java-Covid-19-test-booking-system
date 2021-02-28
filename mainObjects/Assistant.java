@@ -1,4 +1,4 @@
-package UoKCovid19TestBookingSystem.mainModules;
+package UoKCovid19TestBookingSystem.mainObjects;
 
 public class Assistant {
 

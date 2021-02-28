@@ -1,8 +1,6 @@
-package UoKCovid19TestBookingSystem.mainModules;
+package UoKCovid19TestBookingSystem.mainObjects;
 
 import UoKCovid19TestBookingSystem.helperModules.*;
-
-import java.util.Date;
 
 public class AssistantShift {
 

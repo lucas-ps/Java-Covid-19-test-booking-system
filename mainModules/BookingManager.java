@@ -1,8 +1,8 @@
-package UoKCovid19TestBookingSystem.UI;
+package UoKCovid19TestBookingSystem.mainModules;
 
-import UoKCovid19TestBookingSystem.mainModules.Assistant;
-import UoKCovid19TestBookingSystem.mainModules.Room;
-import UoKCovid19TestBookingSystem.mainModules.UniversityResources;
+import UoKCovid19TestBookingSystem.mainObjects.Assistant;
+import UoKCovid19TestBookingSystem.mainObjects.Booking;
+import UoKCovid19TestBookingSystem.mainObjects.Room;
 
 import java.util.*;
 
@@ -21,8 +21,9 @@ public class BookingManager {
         // Creating UoK object and populating it
         ArrayList<Room> rooms = new ArrayList<>();
         ArrayList<Assistant> assistants = new ArrayList<>();
+        ArrayList<Booking> bookings = new ArrayList<>();
 
-        UniversityResources UoK = new UniversityResources(rooms, assistants);
+        UniversityResources UoK = new UniversityResources(rooms, assistants, bookings);
         UoK.populateAssistants();
         UoK.populateRooms();
         mainMenu(UoK);
@@ -73,5 +74,6 @@ public class BookingManager {
         else if (option == 9) university.removeBooking();
         else if (option == 10) university.concludeBooking();
         else if (option == -1) System.exit(0);
+        // TODO: Stop program from ending after executing one of these
     }
 }

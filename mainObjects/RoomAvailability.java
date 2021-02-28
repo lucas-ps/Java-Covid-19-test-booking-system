@@ -1,7 +1,6 @@
-package UoKCovid19TestBookingSystem.mainModules;
+package UoKCovid19TestBookingSystem.mainObjects;
 
 import UoKCovid19TestBookingSystem.helperModules.TimeSlot;
-import UoKCovid19TestBookingSystem.mainModules.*;
 
 public class RoomAvailability {
 
