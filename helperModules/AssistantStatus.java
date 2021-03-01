@@ -1,5 +1,5 @@
 package UoKCovid19TestBookingSystem.helperModules;
 
 public enum AssistantStatus {
-    FREE, BUSY
+    FREE, BUSY, NOT_ON_SHIFT
 }

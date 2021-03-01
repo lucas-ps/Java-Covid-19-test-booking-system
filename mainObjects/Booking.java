@@ -31,4 +31,20 @@ public class Booking {
     }
 
     // Methods
+
+    public void setStatus(BookingStatus status) {
+        this.status = status;
+    }
+
+    public Assistant getAssistantID() {
+        return this.assistantID;
+    }
+
+    public TimeSlot getTimeSlot() {
+        return this.timeSlot;
+    }
+
+    public Room getRoom() {
+        return this.room;
+    }
 }

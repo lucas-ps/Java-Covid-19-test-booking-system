@@ -26,6 +26,7 @@ public class BookingManager {
         University UoK = new University(rooms, assistants, bookings);
         UoK.populateAssistants();
         UoK.populateRooms();
+        UoK.populateBookings();
         mainMenu(UoK);
     }
 
@@ -36,8 +37,16 @@ public class BookingManager {
      */
     public static void mainMenu(University university){
 
-        // TODO: Check which assistants/rooms are available, update their status
+        /**
+         * Statuses refresh every time the main menu refreshes
+         */
+        university.updateAssistantStatuses();
+        university.updateBookingStatuses();
+        university.updateRoomStatuses();
 
+        /**
+         * Lists all options and processed user input so that the relevant function can be executed
+         */
         System.out.flush();
         int option = inputINT("University of Knowledge - COVID test\n" +
                  "\n" +
@@ -81,11 +90,18 @@ public class BookingManager {
         else if (option == -1) System.exit(0);
         // TODO: Stop program from ending after executing one of these
 
+        /**
+         *Allows the user to choose whether they ant to go back to the main menu or end the program after executing
+         * one of the above functions
+         */
         int input = 2;
         while (input > 0 | input < -1) {
             input = inputINT("Press 0 to go back to main menu or -1 (or ctrl+c) to quit this application.\n" +
                     "Input: ");
             if (input == 0) {
+                university.updateAssistantStatuses();
+                university.updateRoomStatuses();
+                university.updateBookingStatuses();
                 mainMenu(university);
             } else System.exit(0);
         }
