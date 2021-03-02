@@ -47,4 +47,8 @@ public class Booking {
     public Room getRoom() {
         return this.room;
     }
+
+    public String getStudentEmail() {
+        return studentEmail;
+    }
 }

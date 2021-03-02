@@ -88,7 +88,6 @@ public class BookingManager {
         else if (option == 9) university.removeBooking();
         else if (option == 10) university.concludeBooking();
         else if (option == -1) System.exit(0);
-        // TODO: Stop program from ending after executing one of these
 
         /**
          *Allows the user to choose whether they ant to go back to the main menu or end the program after executing

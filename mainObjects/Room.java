@@ -6,6 +6,8 @@ import java.time.*;
 import java.time.format.*;
 import java.util.*;
 
+import static UoKCovid19TestBookingSystem.helperModules.helperFunctions.print;
+
 
 public class Room {
     // Attributes
@@ -42,14 +44,8 @@ public class Room {
         this.status = status;
     }
 
-    public int getOccupancy(ArrayList Booking) {
-        // TODO: Get occupancy from bookings ArrayList
-        return 0;
-    }
-
-
     /**
-     * @return  room attributes in the form | <dd/mm/yyyy HH:MM> | <status> | <room_code> | occupancy: <occupancy> |
+     * @return  room attributes in the form | <dd/mm/yyyy HH:MM> | <status> | <room_code> | <occupancy>/<capacity> |
      */
     public String toString(int occupancy){
         LocalDateTime time = LocalDateTime.now();

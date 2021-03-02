@@ -38,7 +38,7 @@ public class University {
      * @return the Assistant object found (if it is found)
      */
     public Assistant getAssistant(int ID) {
-        for (Assistant assistant : assistants) {
+        for (Assistant assistant : this.assistants) {
             if (assistant.getID() == ID) {
                 return assistant;
             }
@@ -52,7 +52,7 @@ public class University {
      */
     public Room getRoom(String code) {
         for (Room room : this.rooms) {
-            if (room.getCode() == code) {
+            if (room.getCode().equals(code)) {
                 return room;
             }
         }
@@ -66,6 +66,7 @@ public class University {
                 occupancy++;
             }
         }
+        print(occupancy);
         return occupancy;
     }
 
@@ -78,7 +79,7 @@ public class University {
     public ArrayList<Booking> getBooking(Room room) {
         ArrayList<Booking> bookings = new ArrayList<>();
         for (Booking booking : this.bookings) {
-            if (booking.getRoom() == room) {
+            if (booking.getRoom().equals(room)) {
                 bookings.add(booking);
             }
         }
@@ -94,7 +95,7 @@ public class University {
     public ArrayList<Booking> getBooking(Assistant assistant) {
         ArrayList<Booking> bookings = new ArrayList<>();
         for (Booking booking : this.bookings) {
-            if (booking.getAssistantID() == assistant) {
+            if (booking.getAssistantID().equals(assistant)) {
                 bookings.add(booking);
             }
         }
@@ -107,9 +108,10 @@ public class University {
      * @return Formatted string with all bookable rooms and their details
      */
     public void formattedBookableRooms() {
+        LocalDateTime now = LocalDateTime.now();
         String formattedBookableRooms = "| Current Date/Time | Status    | Code | Occupancy |\n";
         for (Room room : rooms) {
-            formattedBookableRooms += room.toString(room.getOccupancy(bookings)) + "\n";
+            formattedBookableRooms += room.toString(getRoomOccupancy(room, now)) + "\n";
         }
         print(formattedBookableRooms);
     }
@@ -121,14 +123,17 @@ public class University {
     public void removeRoom() {
         this.formattedBookableRooms();
         String roomCode = inputSTR("\nEnter the code of the room you'd like to remove");
-        for (var i = 0; i < rooms.size(); i++) {
-            if (rooms.get(i).getCode() == roomCode) {
-                rooms.remove(rooms.get(i));
-                print("Room " + roomCode + " was successfully removed");
-                // TODO: Remove all bookings in this room
+        Room roomToRemove = getRoom(roomCode);
+        if (roomToRemove != null) {// Removing all bookings in this room
+            for (Booking booking : getBooking(roomToRemove)) {
+                String email = ("Booking " + booking.getStudentEmail());
+                bookings.remove(booking);
+                print("Booking for " + email + " removed (booking was to take place in removed room)");
             }
+            rooms.remove(roomToRemove);
+            print("Room " + roomCode + " was successfully removed");
         }
-        print("Room " + roomCode + " was not found on the system.");
+        else print("Room " + roomCode + " was not found on the system.");
     }
 
     /**
@@ -137,15 +142,16 @@ public class University {
     public void addRoom() {
         String code = inputSTR("Please enter the new room's code");
         int capacity = inputINT("Please enter the capacity of room " + code);
-        String status = "";
-        while (!(status == "EMPTY") | !(status == "AVAILABLE") | !(status == "FULL")) ;
+        String status;
         print("Please enter a valid room status (EMPTY/AVAILABLE/FULL)");
         status = inputSTR("What is the status of room " + code);
-        RoomStatus roomStatus = RoomStatus.valueOf(status);
-        // TODO: Not sure if that works, test it
-        Room newRoom = new Room(code, capacity, roomStatus);
-        this.rooms.add(newRoom);
-        print("Room " + code + "was successfully added");
+        if (status.equals("EMPTY") || status.equals("AVAILABLE") || status.equals("FULL")){
+            RoomStatus roomStatus = RoomStatus.valueOf(status);
+            Room newRoom = new Room(code, capacity, roomStatus);
+            this.rooms.add(newRoom);
+            print("Room " + code + "was successfully added");
+        }
+        else print("Invalid RoomStatus entered, no new room has been added");
     }
 
     /**
