@@ -1,6 +1,8 @@
 package UoKCovid19TestBookingSystem.helperModules;
 
 import java.time.*;
+import java.time.format.*;
+import java.util.Timer;
 
 public class TimeSlot {
 
@@ -37,5 +39,17 @@ public class TimeSlot {
             return true;
         }
         return false;
+    }
+
+    public String getStartTime() {
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedStartTime = this.startTime.format(time);
+        return formattedStartTime;
+    }
+
+    public String getEndTime() {
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm:ss");
+        String formattedEndTime = this.finishTime.format(time);
+        return formattedEndTime;
     }
 }

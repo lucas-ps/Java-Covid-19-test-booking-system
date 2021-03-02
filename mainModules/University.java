@@ -168,8 +168,20 @@ public class University {
 
     // To manage Assistants on Shift
 
+    /**
+     * prints assistants on shift attributes in the form | <ID> | <Name> | <Email> | <Status>
+     *     | <shift.getStartTime()> - <shift.getEndTime()> |
+     */
     public void formattedAvailableAssistants() {
-        // TODO: formattedAvailableAssistants()
+        LocalDateTime now = LocalDateTime.now();
+        String formattedAvailableAssistants = "| ID | Name              | Email                | Status " +
+                "| Shift               |\n";
+        for (Assistant assistant : assistants) {
+            if (!AssistantStatus.NOT_ON_SHIFT.equals(assistant.getStatus())) {
+                formattedAvailableAssistants += assistant.toString() + "\n";
+            }
+        }
+        print(formattedAvailableAssistants);
     }
 
     public void addAssistant() {
@@ -289,15 +301,15 @@ public class University {
         LocalDateTime datetime = LocalDateTime.now();
         LocalDate date = LocalDate.now();
         TimeSlot nineToFive = new TimeSlot(date.atTime(9, 0),date.atTime(17, 0));
-        TimeSlot nowMinusEightHours = new TimeSlot(roundedTime(datetime),roundedTime(datetime).minusHours(8));
+        TimeSlot eightHourShift = new TimeSlot(roundedTime(datetime).minusHours(5),roundedTime(datetime).plusHours(3));
 
         // Creating assistants
-        addAssistant(1,"Wanda Maximoff","W.Maximoff@UoK.ac.uk",AssistantStatus.BUSY,nowMinusEightHours);
-        addAssistant(2,"Agatha Harkness","A.Harkness@UoK.ac.uk",AssistantStatus.BUSY,nowMinusEightHours);
-        addAssistant(3,"Jimmy Woo","J.Woo@UoK.ac.uk",AssistantStatus.BUSY,nowMinusEightHours);
-        addAssistant(4,"Darcy Lewis","D.Lewis@UoK.ac.uk",AssistantStatus.BUSY,nowMinusEightHours);
-        addAssistant(5,"Monica Rambeau","M.Rambeau@UoK.ac.uk",AssistantStatus.BUSY,nowMinusEightHours);
-        addAssistant(6,"Vision Maximoff","V.Maximoff@UoK.ac.uk",AssistantStatus.BUSY,nowMinusEightHours);
+        addAssistant(1,"Wanda Maximoff","W.Maximoff@UoK.ac.uk",AssistantStatus.BUSY,eightHourShift);
+        addAssistant(2,"Agatha Harkness","A.Harkness@UoK.ac.uk",AssistantStatus.BUSY,eightHourShift);
+        addAssistant(3,"Jimmy Woo","J.Woo@UoK.ac.uk",AssistantStatus.BUSY,eightHourShift);
+        addAssistant(4,"Darcy Lewis","D.Lewis@UoK.ac.uk",AssistantStatus.BUSY,eightHourShift);
+        addAssistant(5,"Monica Rambeau","M.Rambeau@UoK.ac.uk",AssistantStatus.BUSY,eightHourShift);
+        addAssistant(6,"Vision Maximoff","V.Maximoff@UoK.ac.uk",AssistantStatus.BUSY,eightHourShift);
         addAssistant(7,"Javier Freeman","J.Freeman@UoK.ac.uk",AssistantStatus.BUSY,nineToFive);
         addAssistant(8,"Skyler Spears","S.Spears@UoK.ac.uk",AssistantStatus.BUSY,nineToFive);
         addAssistant(9,"Madalyn Levine","M.Levine@UoK.ac.uk",AssistantStatus.BUSY,nineToFive);
