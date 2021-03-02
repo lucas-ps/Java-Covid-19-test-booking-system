@@ -55,6 +55,6 @@ public class Room {
         LocalDateTime time = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedDateTime = time.format(formatter);
-        return String.format("| %s | %s | %s | Occupancy: %s/%s |",formattedDateTime, this.status ,this.code, occupancy, this.capacity);
+        return String.format("| %-17s | %-9s | %-4s | %s/%-7s |",formattedDateTime, this.status ,this.code, occupancy, this.capacity);
     }
 }

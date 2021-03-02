@@ -107,9 +107,9 @@ public class University {
      * @return Formatted string with all bookable rooms and their details
      */
     public void formattedBookableRooms() {
-        String formattedBookableRooms = "";
+        String formattedBookableRooms = "| Current Date/Time | Status    | Code | Occupancy |\n";
         for (Room room : rooms) {
-            formattedBookableRooms += room.toString(room.getOccupancy(bookings));
+            formattedBookableRooms += room.toString(room.getOccupancy(bookings)) + "\n";
         }
         print(formattedBookableRooms);
     }
