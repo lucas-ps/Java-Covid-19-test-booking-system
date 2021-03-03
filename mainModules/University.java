@@ -4,6 +4,7 @@ import UoKCovid19TestBookingSystem.helperModules.*;
 import UoKCovid19TestBookingSystem.mainObjects.*;
 
 
+import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -66,7 +67,6 @@ public class University {
                 occupancy++;
             }
         }
-        print(occupancy);
         return occupancy;
     }
 
@@ -103,6 +103,7 @@ public class University {
     }
 
     // To manage Bookable Rooms
+    // TODO: Fix formatting of first 3 methods in line with specification
 
     /**
      * @return Formatted string with all bookable rooms and their details
@@ -174,7 +175,7 @@ public class University {
      */
     public void formattedAvailableAssistants() {
         LocalDateTime now = LocalDateTime.now();
-        String formattedAvailableAssistants = "| ID | Name              | Email                | Status " +
+        String formattedAvailableAssistants = "| ID | Name                | Email                | Status " +
                 "| Shift               |\n";
         for (Assistant assistant : assistants) {
             if (!AssistantStatus.NOT_ON_SHIFT.equals(assistant.getStatus())) {
@@ -184,8 +185,63 @@ public class University {
         print(formattedAvailableAssistants);
     }
 
+    public void formattedFreeAssistants() {
+        LocalDateTime now = LocalDateTime.now();
+        String formattedFreeAssistants = "| ID | Name                | Email                | Status " +
+                "| Shift               |\n";
+        for (Assistant assistant : assistants) {
+            if (AssistantStatus.FREE.equals(assistant.getStatus())) {
+                formattedFreeAssistants += assistant.toString() + "\n";
+            }
+        }
+        print(formattedFreeAssistants);
+    }
+
+    public void formattedAllAssistants() {
+        String formattedAvailableAssistants = "| ID | Name                | Email                | Status " +
+                "| Shift               |\n";
+        for (Assistant assistant : assistants) {
+            formattedAvailableAssistants += (assistant.toString() + "\n");
+        }
+        print(formattedAvailableAssistants);
+    }
+
     public void addAssistant() {
-        // TODO: addAssistant()
+        System.out.flush();
+        print("University of Knowledge - COVID test\n" +
+                "\n" +
+                "Adding assistant on shift\n");
+        formattedAllAssistants();
+        String input = "";
+        do {
+            input = inputSTR("Please, enter the following:\n" +
+                    "\n" +
+                    "The ID of an assistant and date (dd/mm/yyyy), separated by a white space.\n" +
+                    "0. Back to main menu.\n" +
+                    "-1. Quit application.\n" +
+                    "\n" +
+                    "Input:");
+            String[] split = input.split(" ");
+            try {
+                int id = Integer.parseInt(split[0]);
+                SimpleDateFormat dateParser = new SimpleDateFormat("dd/mm/yyyy");
+                Date date = dateParser.parse(split[1]);
+                Assistant assistant = getAssistant(id);
+                assistant.addWorkingDay(date);
+                print("Assistant on Shift added successfully:\n");
+                print("| ID | Name                | Email                | Shift               | Date       |\n"
+                + assistant.toString(date));
+                input = inputSTR("\n0. Back to main menu.\n" +
+                        "-1. Quit application.\n" +
+                        "\n" +
+                        "Input:");
+            } catch (Exception e){
+                print("Invalid input, input must be in the format 'ID  dd/mm/yyyy'");
+                e.printStackTrace();
+            }
+        } while (!"0".equals(input) || !"-1".equals(input));
+        BookingManager.refreshOrExit(input);
+        // TODO: Fix update assistant status method with dates
     }
 
     /**
@@ -202,7 +258,11 @@ public class University {
     }
 
     public void removeAssistant() {
-        // TODO: removeAssistant()
+        print("University of Knowledge - COVID test\n" +
+                "\n" +
+                "Removing assistant on shift\n");
+        formattedFreeAssistants();
+        String input = "";
     }
 
     // To manage Bookings
@@ -281,7 +341,7 @@ public class University {
     }
 
     /**
-     * Update bookind statuses based on whether their TimeSlot is over yet
+     * Update booking statuses based on whether their TimeSlot is over yet
      */
     public void updateBookingStatuses() {
         LocalDateTime now = LocalDateTime.now();

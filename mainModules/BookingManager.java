@@ -11,6 +11,7 @@ import static UoKCovid19TestBookingSystem.helperModules.helperFunctions.*;
 public class BookingManager {
 
     // TODO: Validate inputs
+    static University UoK;
 
     /**
      * The main function of the program, creates the UoK object and calls the mainMenu() method
@@ -23,7 +24,7 @@ public class BookingManager {
         ArrayList<Assistant> assistants = new ArrayList<>();
         ArrayList<Booking> bookings = new ArrayList<>();
 
-        University UoK = new University(rooms, assistants, bookings);
+        UoK = new University(rooms, assistants, bookings);
         UoK.populateAssistants();
         UoK.populateRooms();
         UoK.populateBookings();
@@ -93,16 +94,13 @@ public class BookingManager {
          *Allows the user to choose whether they ant to go back to the main menu or end the program after executing
          * one of the above functions
          */
-        int input = 2;
-        while (input > 0 | input < -1) {
-            input = inputINT("Press 0 to go back to main menu or -1 (or ctrl+c) to quit this application.\n" +
-                    "Input: ");
-            if (input == 0) {
-                university.updateAssistantStatuses();
-                university.updateRoomStatuses();
-                university.updateBookingStatuses();
-                mainMenu(university);
-            } else System.exit(0);
         }
-        }
+
+    public static void refreshOrExit(String input) {
+        if (input.equals("0")) {
+            mainMenu(UoK);
+        } else System.exit(0);
+    }
+
+
 }

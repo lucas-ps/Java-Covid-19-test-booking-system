@@ -2,8 +2,9 @@ package UoKCovid19TestBookingSystem.mainObjects;
 
 import UoKCovid19TestBookingSystem.helperModules.*;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.*;
+import java.time.format.*;
+import java.util.*;
 
 public class Assistant {
 
@@ -14,6 +15,7 @@ public class Assistant {
     private String email;
     private AssistantStatus status;
     private TimeSlot shift;
+    private ArrayList<Date> DaysWorking;
 
     // Constructor
 
@@ -27,12 +29,18 @@ public class Assistant {
         this.email = email;
         this.status = status;
         this.shift = shift;
+        this.DaysWorking = new ArrayList<Date>();
+        addWorkingDay(Calendar.getInstance().getTime());
     }
 
     // Methods
 
     public int getID(){
         return this.ID;
+    }
+
+    public void addWorkingDay(Date date) {
+        this.DaysWorking.add(date);
     }
 
     public TimeSlot getShift() {
@@ -52,10 +60,20 @@ public class Assistant {
      *     | <shift.getStartTime()> - <shift.getEndTime()> |
      */
     public String toString(){
-        LocalDateTime time = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String formattedDateTime = time.format(formatter);
-        return String.format("| %-2s | %-17s | %-20s | %-6s | %s - %s |", this.ID, this.name, this.email, this.status,
-                this.shift.getStartTime(), this.shift.getEndTime());
+        String formatted = String.format("| %-2s | %-19s | %-20s | %-6s | %s - %s |", this.ID, this.name, this.email,
+                this.status,this.shift.getStartTime(), this.shift.getEndTime());
+        return formatted;
+    }
+
+    /**
+     * @return  assistant attributes in the form | <ID> | <Name> | <Email> | <shift.getStartTime()> -
+     * <shift.getEndTime()> | <date> |
+     */
+    public String toString(Date date){
+        DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedDate = dateFormat.format(date);
+        return String.format("| %-2s | %-19s | %-20s | %s - %s | %s |", this.ID, this.name, this.email,
+                this.shift.getStartTime(), this.shift.getEndTime(), formattedDate);
     }
 }
