@@ -32,6 +32,11 @@ public class Booking {
 
     // Methods
 
+
+    public BookingStatus getStatus() {
+        return status;
+    }
+
     public void setStatus(BookingStatus status) {
         this.status = status;
     }
@@ -50,5 +55,14 @@ public class Booking {
 
     public String getStudentEmail() {
         return studentEmail;
+    }
+
+    /**
+     * @return booking attributes in the form | <assistantID> | <room> | <studentEmail> | <timeSlot.getStartTime()> -
+     * <timeSlot.getEndTime()> | <status> |
+     */
+    public String toString() {
+        return String.format("| %-12s | %-4s | %-15s | %s - %s | %-9s |", this.assistantID.getID(), this.room.getCode(), this.studentEmail,
+                this.timeSlot.getStartTime(), this.timeSlot.getEndTime(), this.status);
     }
 }

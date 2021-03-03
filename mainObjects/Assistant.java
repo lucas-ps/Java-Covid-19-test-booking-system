@@ -43,6 +43,10 @@ public class Assistant {
         this.DaysWorking.add(date);
     }
 
+    public void removeWorkingDay(Date date) {
+        this.DaysWorking.remove(date);
+    }
+
     public TimeSlot getShift() {
         return this.shift;
     }
@@ -76,4 +80,6 @@ public class Assistant {
         return String.format("| %-2s | %-19s | %-20s | %s - %s | %s |", this.ID, this.name, this.email,
                 this.shift.getStartTime(), this.shift.getEndTime(), formattedDate);
     }
+
+
 }

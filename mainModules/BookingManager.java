@@ -50,9 +50,10 @@ public class BookingManager {
          */
         System.out.flush();
         int option = inputINT("University of Knowledge - COVID test\n" +
-                 "\n" +
-                 "Manage Bookings\n" +
-                 "Please, enter the corresponding number to select your option:\n" +
+                "\n" +
+                "Manage Bookings\n" +
+                "\n" +
+                "Please, enter the corresponding number to select your option:\n" +
                 "\n" +
                 "To manage Bookable Rooms:\n" +
                 "\t1. List\n" +

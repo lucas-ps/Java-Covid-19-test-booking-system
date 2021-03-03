@@ -7,6 +7,7 @@ import UoKCovid19TestBookingSystem.mainObjects.*;
 import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import static UoKCovid19TestBookingSystem.helperModules.helperFunctions.*;
@@ -185,6 +186,10 @@ public class University {
         print(formattedAvailableAssistants);
     }
 
+    /**
+     * Prints assistants with the Assistant Status "FREE" in the form | <ID> | <Name> | <Email> | <Status>
+     *    | <shift.getStartTime()> - <shift.getEndTime()> |
+     */
     public void formattedFreeAssistants() {
         LocalDateTime now = LocalDateTime.now();
         String formattedFreeAssistants = "| ID | Name                | Email                | Status " +
@@ -197,6 +202,10 @@ public class University {
         print(formattedFreeAssistants);
     }
 
+    /**
+     * Prints all assistants, regardless of status in the form | <ID> | <Name> | <Email> | <Status>
+     *      *     | <shift.getStartTime()> - <shift.getEndTime()> |
+     */
     public void formattedAllAssistants() {
         String formattedAvailableAssistants = "| ID | Name                | Email                | Status " +
                 "| Shift               |\n";
@@ -206,6 +215,9 @@ public class University {
         print(formattedAvailableAssistants);
     }
 
+    /**
+     * Processes user inputs to add an assistant on shift on a specified date
+     */
     public void addAssistant() {
         System.out.flush();
         print("University of Knowledge - COVID test\n" +
@@ -257,18 +269,112 @@ public class University {
         this.assistants.add(newAssistant);
     }
 
+    /**
+     * Processes user input to remove an assistant from shift today
+     */
     public void removeAssistant() {
         print("University of Knowledge - COVID test\n" +
                 "\n" +
                 "Removing assistant on shift\n");
         formattedFreeAssistants();
         String input = "";
+        do {
+            input = inputSTR("Please, enter the following:\n" +
+                    "\n" +
+                    "The sequential ID to select the assistant on shift to be removed.\n" +
+                    "0. Back to main menu.\n" +
+                    "-1. Quit application.\n" +
+                    "\n" +
+                    "Input:");
+            try {
+                int ID = Integer.parseInt(input);
+                Assistant assistant = getAssistant(ID);
+                assistant.removeWorkingDay(Calendar.getInstance().getTime());
+                assistant.setStatus(AssistantStatus.NOT_ON_SHIFT);
+                print("Assistant on Shift removed successfully:\n");
+                print("| ID | Name                | Email                | Status       | Previous shift      |\n"
+                        + assistant.toString());
+                input = inputSTR("\n0. Back to main menu.\n" +
+                        "-1. Quit application.\n" +
+                        "\n" +
+                        "Input:");
+            } catch (Exception e){
+                print("Invalid input, ID was not found and no assistant has been removed from shift");
+                e.printStackTrace();
+            }
+        } while (!"0".equals(input) || !"-1".equals(input));
+        BookingManager.refreshOrExit(input);
     }
 
     // To manage Bookings
 
+    /**
+     *
+     */
     public void formattedBookings() {
-        // TODO: formattedBookings()
+        print("University of Knowledge - COVID test\n" +
+                "\n" +
+                "Listing scheduled bookings\n");
+        String input = "";
+        input = inputSTR("Select which bookings to list:\n" +
+                "1. All\n" +
+                "2. Only bookings status:SCHEDULED\n" +
+                "3. Only bookings status:COMPLETED\n" +
+                "0. Back to main menu.\n" +
+                "-1. Quit application.\n" +
+                "\n" +
+                "Input:");
+        if (input.equals("1")) {
+            listAllBookings();
+        } else if (input.equals("2")) {
+            listScheduledBookings();
+        } else if (input.equals("3")) {
+            listCompletedBookings();
+        }
+        else if (input.equals("-1") || input.equals("0")) {
+            BookingManager.refreshOrExit(input);
+        }
+        else {
+            print ("\nInvalid option entered, showing all bookings\n");
+            listAllBookings();
+        }
+        do {
+            input = inputSTR("0. Back to main menu.\n" +
+                    "-1. Quit application.\n" +
+                    "\n");
+            if (input.equals("-1") || input.equals("0")) {
+                BookingManager.refreshOrExit(input);
+            }
+            else print("Invalid input entered");
+        } while (true);
+    }
+
+    public void listAllBookings() {
+        String formattedBookings = "\n| Assistant ID | Room | Student Email   | Time Slot     | Status    |\n";
+        for (Booking booking : this.bookings) {
+            formattedBookings += booking.toString() + "\n";
+        }
+        print(formattedBookings);
+    }
+
+    public void listScheduledBookings() {
+        String formattedBookings = "\n| Assistant ID | Room | Student Email   | Time Slot     | Status    |\n";
+        for (Booking booking : this.bookings) {
+            if (booking.getStatus().equals(BookingStatus.SCHEDULED)) {
+                formattedBookings += booking.toString() + "\n";
+            }
+        }
+        print(formattedBookings);
+    }
+
+    public void listCompletedBookings() {
+        String formattedBookings = "\n| Assistant ID | Room | Student Email   | Time Slot     | Status    |\n";
+        for (Booking booking : this.bookings) {
+            if (booking.getStatus().equals(BookingStatus.COMPLETED)) {
+                formattedBookings += booking.toString() + "\n";
+            }
+        }
+        print(formattedBookings);
     }
 
     public void addBooking() {

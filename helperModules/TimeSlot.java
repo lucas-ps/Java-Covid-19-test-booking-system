@@ -42,13 +42,13 @@ public class TimeSlot {
     }
 
     public String getStartTime() {
-        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
         String formattedStartTime = this.startTime.format(time);
         return formattedStartTime;
     }
 
     public String getEndTime() {
-        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm:ss");
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
         String formattedEndTime = this.finishTime.format(time);
         return formattedEndTime;
     }
