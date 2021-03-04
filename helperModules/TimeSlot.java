@@ -52,7 +52,7 @@ public class TimeSlot {
     }
 
     public String getStartDateTime() {
-        DateTimeFormatter time = DateTimeFormatter.ofPattern("dd/mm/yyyy HH:mm");
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         String formattedStartTime = this.startTime.format(time);
         return formattedStartTime;
     }
