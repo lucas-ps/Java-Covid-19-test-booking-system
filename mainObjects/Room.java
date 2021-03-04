@@ -44,6 +44,10 @@ public class Room {
         this.status = status;
     }
 
+    public RoomStatus getStatus() {
+        return status;
+    }
+
     /**
      * @return  room attributes in the form | <dd/mm/yyyy HH:MM> | <status> | <room_code> | <occupancy>/<capacity> |
      */

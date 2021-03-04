@@ -34,6 +34,10 @@ public class TimeSlot {
         return false;
     }
 
+    public LocalDateTime getStartTime(Boolean asLocalDateTime) {
+        return this.startTime;
+    }
+
     public boolean isTimeAfterTimeSlot(LocalDateTime time) {
         if (time.isAfter(this.finishTime)) {
             return true;
@@ -43,6 +47,12 @@ public class TimeSlot {
 
     public String getStartTime() {
         DateTimeFormatter time = DateTimeFormatter.ofPattern("HH:mm");
+        String formattedStartTime = this.startTime.format(time);
+        return formattedStartTime;
+    }
+
+    public String getStartDateTime() {
+        DateTimeFormatter time = DateTimeFormatter.ofPattern("dd/mm/yyyy HH:mm");
         String formattedStartTime = this.startTime.format(time);
         return formattedStartTime;
     }

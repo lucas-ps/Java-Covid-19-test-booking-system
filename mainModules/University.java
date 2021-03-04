@@ -378,8 +378,112 @@ public class University {
     }
 
     public void addBooking() {
-        // TODO: addBooking()
+        print("University of Knowledge - COVID test\n" +
+                "\n" +
+                "Adding booking (appointment for a COVID test) to the system\n" +
+                "\n");
+        ArrayList<AvailableAppointment> availableTimeSlots = AvailableTimeslots();
+        print ("11. " + availableTimeSlots.get(0).getTimeSlot().getStartDateTime() + "\n" +
+                "12. " + availableTimeSlots.get(1).getTimeSlot().getStartDateTime() + "\n" +
+                "13. " + availableTimeSlots.get(2).getTimeSlot().getStartDateTime() + "\n" +
+                "14. " + availableTimeSlots.get(3).getTimeSlot().getStartDateTime() + "\n" +
+                "15. " + availableTimeSlots.get(4).getTimeSlot().getStartDateTime() + "\n" +
+                "...\n");
+        String input = inputSTR("Please, enter one of the following:\n" +
+                "\n" +
+                "The sequential ID of an available time-slot and the student email, separated by a white space.\n" +
+                "0. Back to main menu.\n" +
+                "-1. Quit application.\n" +
+                "\n" +
+                "Input:");
+        String[] split = input.split(" ");
+        // TODO: Validate emails
+        try {
+            int index = Integer.parseInt(split[0]) - 11;
+            AvailableAppointment chosenAppointment = availableTimeSlots.get(index);
+            Booking newBooking = new Booking(chosenAppointment.getAssistant(), chosenAppointment.getRoom(), split[1],
+                    chosenAppointment.getTimeSlot(), BookingStatus.SCHEDULED);
+            this.bookings.add(newBooking);
+            print("Booking added successfully:\n" +
+                    "\n| Assistant ID | Room | Student Email   | Time Slot     | Status    |\n"
+                    + newBooking.toString());
+        } catch (Exception e){
+            print("Invalid input, input must be in the format 'ID student@UoK.ac.uk'");
+            e.printStackTrace();
+        }
     }
+
+    public ArrayList<AvailableAppointment> AvailableTimeslots() {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime roundedTime = roundedTime(now).plusMinutes(15);
+        ArrayList<AvailableAppointment> availableTimeSlots = new ArrayList<>();
+
+        // Iterate for 5 soonest available appointments
+        for(int i = 0; i < 4; ++i) {
+            for (Assistant assistant : this.assistants) {
+                if (getAssistantStatus(roundedTime, assistant).equals(AssistantStatus.FREE)) {
+                    for (Room room : this.rooms) {
+                        if (room.getStatus().equals(RoomStatus.AVAILABLE) || room.getStatus().equals(RoomStatus.EMPTY)) {
+                            TimeSlot timeSlot = new TimeSlot(roundedTime, roundedTime.plusMinutes(15));
+                            availableTimeSlots.add(new AvailableAppointment(timeSlot, room, assistant));
+                            roundedTime = roundedTime.plusMinutes(15);
+                        }
+                    }
+                }
+            }
+        }
+        return availableTimeSlots;
+    }
+
+    /**
+     * Method to get an assistant's status at a specific time
+     * @param assistant the assistant object being checked
+     * @param time the time being checked
+     * @return AssistantStatus of the assistant at that time
+     */
+    public AssistantStatus getAssistantStatus(LocalDateTime time, Assistant assistant) {
+        for (Booking booking : getBooking(assistant)) {
+            if (booking.getTimeSlot().isTimeInTimeSlot(time)) {
+                return AssistantStatus.BUSY;
+            }
+        }
+        if (assistant.getShift().isTimeInTimeSlot(time)) {
+            return AssistantStatus.FREE;
+        }
+        return AssistantStatus.NOT_ON_SHIFT;
+    }
+
+    public TimeSlot soonestAvailableTimeSlot(Assistant assistant) {
+        LocalDateTime timeSlotStart = LocalDateTime.now();
+        timeSlotStart = roundedTime(timeSlotStart).plusMinutes(15);
+        Boolean i = true;
+        TimeSlot soonestTimeSlot = null;
+        do {
+            for (Booking booking : getBooking(assistant)) {
+                if (!booking.getTimeSlot().isTimeInTimeSlot(timeSlotStart)) {
+                    soonestTimeSlot = new TimeSlot(timeSlotStart, timeSlotStart.plusMinutes(15));
+                    i = false;
+                }
+                timeSlotStart = timeSlotStart.plusMinutes(15);
+            }
+        } while (i);
+        return soonestTimeSlot;
+    }
+    
+
+
+    public ArrayList<Booking> getBookings(Assistant assistant) {
+        ArrayList<Booking> bookings = new ArrayList<>();
+        for (Booking booking : this.bookings) {
+            if (booking.getAssistantID().equals(assistant)) {
+                if (booking.getStatus().equals(BookingStatus.SCHEDULED)) {
+                    bookings.add(booking);
+                }
+            }
+        }
+        return bookings;
+    }
+    
 
     /**
      * Creates and adds new booking to ArrayList where parameters are already specified
