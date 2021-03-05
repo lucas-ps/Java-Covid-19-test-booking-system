@@ -69,6 +69,13 @@ public class University {
                 occupancy++;
             }
         }
+        if (occupancy == room.getCapacity()){
+            room.setStatus(RoomStatus.FULL);
+        }
+        else if (occupancy == 0){
+            room.setStatus(RoomStatus.EMPTY);
+        }
+        else room.setStatus(RoomStatus.AVAILABLE);
         return occupancy;
     }
 
@@ -141,23 +148,49 @@ public class University {
         print(formattedBookableRooms);
     }
 
+    public void formattedEmptyRooms() {
+        LocalDateTime now = LocalDateTime.now();
+        String formattedBookableRooms = "| Current Date/Time | Status    | Code | Occupancy |\n";
+        for (Room room : rooms) {
+            if (RoomStatus.EMPTY.equals(room.getStatus())) {
+                formattedBookableRooms += room.toString(getRoomOccupancy(room, now)) + "\n";
+            }
+        }
+        print(formattedBookableRooms);
+    }
+
+
     /**
-     * Removes a room from the rooms ArrayList
+     * Removes specified empty room from the rooms ArrayList
      */
     public void removeRoom() {
-        this.formattedBookableRooms();
-        String roomCode = inputSTR("\nEnter the code of the room you'd like to remove");
-        Room roomToRemove = getRoom(roomCode);
-        if (roomToRemove != null) {// Removing all bookings in this room
-            for (Booking booking : getBooking(roomToRemove)) {
-                String email = ("Booking " + booking.getStudentEmail());
-                bookings.remove(booking);
-                print("Booking for " + email + " removed (booking was to take place in removed room)");
+        print("University of Knowledge - COVID test\n" +
+                "\n" +
+                "Removing bookable room\n" +
+                "\n");
+        formattedEmptyRooms();
+        do {
+            String input = inputSTR("Please, enter one of the following:\n" +
+                    "\n" +
+                    "The room code of the bookable room to be removed.\n" +
+                    "0. Back to main menu.\n" +
+                    "-1. Quit application.\n" +
+                    "\n" +
+                    "Input:");
+            if (input.equals("-1") || input.equals("0")) {
+                BookingManager.refreshOrExit(input);
             }
-            rooms.remove(roomToRemove);
-            print("Room " + roomCode + " was successfully removed");
-        }
-        else print("Room " + roomCode + " was not found on the system.");
+            try{
+                Room roomToRemove = getRoom(input);
+                String removedRoom = "| Current Date/Time | Status    | Code | Occupancy |\n" +
+                        roomToRemove.toString(0);
+                this.rooms.remove(roomToRemove);
+                print("\nBookable Room removed successfully:\n" +
+                        removedRoom + "\n");
+            } catch (Exception e){
+                print("Invalid input, input must be in the format 'RoomCode'");
+            }
+        } while (true);
     }
 
     /**
@@ -192,8 +225,8 @@ public class University {
             TimeSlot timeSlot = new TimeSlot(timeSlotStart, timeSlotEnd);
             print("\nBookable Room added successfully:\n" +
                     "\n" +
-                    "| Current Date/Time | Status    | Code | Available from  |\n" +
-                    room.toString() + startTime + " |");
+                    "| Current Date/Time | Status    | Code | Available from   |\n" +
+                    room.toString() + " " + startTime + " |\n");
         } catch (Exception e) {
             print("Invalid input, input must be in the format 'code dd/mm/yyyy HH:MM'");
         }
@@ -251,8 +284,8 @@ public class University {
      *      *     | <shift.getStartTime()> - <shift.getEndTime()> |
      */
     public void formattedAllAssistants() {
-        String formattedAvailableAssistants = "| ID | Name                | Email                | Status " +
-                "| Shift               |\n";
+        String formattedAvailableAssistants = "| ID | Name                | Email                | Status       " +
+                "| Shift         |\n";
         for (Assistant assistant : assistants) {
             formattedAvailableAssistants += (assistant.toString() + "\n");
         }
@@ -277,6 +310,9 @@ public class University {
                     "-1. Quit application.\n" +
                     "\n" +
                     "Input:");
+            if (input.equals("-1") || input.equals("0")) {
+                BookingManager.refreshOrExit(input);
+            }
             String[] split = input.split(" ");
             try {
                 int id = Integer.parseInt(split[0]);
@@ -285,18 +321,12 @@ public class University {
                 Assistant assistant = getAssistant(id);
                 assistant.addWorkingDay(date);
                 print("Assistant on Shift added successfully:\n");
-                print("| ID | Name                | Email                | Shift               | Date       |\n"
+                print("| ID | Name                | Email                | Shift         | Date       |\n"
                 + assistant.toString(date));
-                input = inputSTR("\n0. Back to main menu.\n" +
-                        "-1. Quit application.\n" +
-                        "\n" +
-                        "Input:");
             } catch (Exception e){
                 print("Invalid input, input must be in the format 'ID  dd/mm/yyyy'");
-                e.printStackTrace();
             }
-        } while (!"0".equals(input) || !"-1".equals(input));
-        BookingManager.refreshOrExit(input);
+        } while (true);
     }
 
     /**

@@ -64,7 +64,7 @@ public class Assistant {
      *     | <shift.getStartTime()> - <shift.getEndTime()> |
      */
     public String toString(){
-        String formatted = String.format("| %-2s | %-19s | %-20s | %-6s | %s - %s |", this.ID, this.name, this.email,
+        String formatted = String.format("| %-2s | %-19s | %-20s | %-12s | %s - %s |", this.ID, this.name, this.email,
                 this.status,this.shift.getStartTime(), this.shift.getEndTime());
         return formatted;
     }
