@@ -15,6 +15,7 @@ public class Room {
     private String code;
     private int capacity;
     private RoomStatus status;
+    private ArrayList<TimeSlot> TimeSlotsAvailable;
 
     // Constructor
 
@@ -24,6 +25,7 @@ public class Room {
         this.code = code;
         this.capacity = capacity;
         this.status = status;
+        this.TimeSlotsAvailable = new ArrayList<TimeSlot>();
         }
 
     // Methods
@@ -48,6 +50,10 @@ public class Room {
         return status;
     }
 
+    public void addTimeSlot(TimeSlot timeSlot) {
+        this.TimeSlotsAvailable.add(timeSlot);
+    }
+
     /**
      * @return  room attributes in the form | <dd/mm/yyyy HH:MM> | <status> | <room_code> | <occupancy>/<capacity> |
      */
@@ -56,5 +62,12 @@ public class Room {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         String formattedDateTime = time.format(formatter);
         return String.format("| %-17s | %-9s | %-4s | %s/%-7s |",formattedDateTime, this.status ,this.code, occupancy, this.capacity);
+    }
+
+    public String toString(){
+        LocalDateTime time = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = time.format(formatter);
+        return String.format("| %-17s | %-9s | %-4s |",formattedDateTime, this.status ,this.code);
     }
 }

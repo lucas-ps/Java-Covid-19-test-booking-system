@@ -6,6 +6,7 @@ import UoKCovid19TestBookingSystem.mainObjects.*;
 
 import java.text.SimpleDateFormat;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -113,11 +114,32 @@ public class University {
         LocalDateTime now = LocalDateTime.now();
         String formattedBookableRooms = "| Current Date/Time | Status    | Code | Occupancy |\n";
         for (Room room : rooms) {
+            if (!RoomStatus.FULL.equals(room.getStatus())) {
+                formattedBookableRooms += room.toString(getRoomOccupancy(room, now)) + "\n";
+            }
+        }
+        print(formattedBookableRooms);
+
+        do {String input = inputSTR("Please, enter one of the following:\n" +
+                "\n" +
+                "0. Back to main menu.\n" +
+                "-1. Quit application.\n" +
+                "\n" +
+                "Input:");
+            if (input.equals("-1") || input.equals("0")) {
+                BookingManager.refreshOrExit(input);
+            } else print("Invalid input");
+        } while (true);
+    }
+
+    public void formattedAllRooms() {
+        LocalDateTime now = LocalDateTime.now();
+        String formattedBookableRooms = "| Current Date/Time | Status    | Code | Occupancy |\n";
+        for (Room room : rooms) {
             formattedBookableRooms += room.toString(getRoomOccupancy(room, now)) + "\n";
         }
         print(formattedBookableRooms);
     }
-
 
     /**
      * Removes a room from the rooms ArrayList
@@ -139,21 +161,43 @@ public class University {
     }
 
     /**
-     * Adds new room to rooms ArrayList, room created by user through inputs
+     * Make specified room available
      */
     public void addRoom() {
-        String code = inputSTR("Please enter the new room's code");
-        int capacity = inputINT("Please enter the capacity of room " + code);
-        String status;
-        print("Please enter a valid room status (EMPTY/AVAILABLE/FULL)");
-        status = inputSTR("What is the status of room " + code);
-        if (status.equals("EMPTY") || status.equals("AVAILABLE") || status.equals("FULL")){
-            RoomStatus roomStatus = RoomStatus.valueOf(status);
-            Room newRoom = new Room(code, capacity, roomStatus);
-            this.rooms.add(newRoom);
-            print("Room " + code + "was successfully added");
+        print("University of Knowledge - COVID test\n" +
+                "\n" +
+                "Adding bookable room\n" +
+                "\n");
+        formattedAllRooms();
+        do {String input = inputSTR("Please, enter one of the following:\n" +
+                "\n" +
+                "The room's code, a date (dd/mm/yyyy), and a time (HH:MM),\n" +
+                "separated by a white space.\n" +
+                "0. Back to main menu.\n" +
+                "-1. Quit application.\n" +
+                "\n" +
+                "Input:");
+        if (input.equals("-1") || input.equals("0")) {
+            BookingManager.refreshOrExit(input);
         }
-        else print("Invalid RoomStatus entered, no new room has been added");
+        try {
+            String[] split = input.split(" ");
+            String code = split[0];
+            String startTime = split[1] + " " + split[2];
+            Room room = getRoom(code);
+            DateTimeFormatter strToDateTime = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+            LocalDateTime timeSlotStart = LocalDateTime.parse(startTime, strToDateTime);
+            String endTime = split[1] + " " + "23:59";
+            LocalDateTime timeSlotEnd = LocalDateTime.parse(endTime, strToDateTime);
+            TimeSlot timeSlot = new TimeSlot(timeSlotStart, timeSlotEnd);
+            print("\nBookable Room added successfully:\n" +
+                    "\n" +
+                    "| Current Date/Time | Status    | Code | Available from  |\n" +
+                    room.toString() + startTime + " |");
+        } catch (Exception e) {
+            print("Invalid input, input must be in the format 'code dd/mm/yyyy HH:MM'");
+        }
+        } while (true);
     }
 
     /**
@@ -253,7 +297,6 @@ public class University {
             }
         } while (!"0".equals(input) || !"-1".equals(input));
         BookingManager.refreshOrExit(input);
-        // TODO: Fix update assistant status method with dates
     }
 
     /**
@@ -576,6 +619,7 @@ public class University {
             int occupancy = getRoomOccupancy(room, now);
             if (occupancy == room.getCapacity()) {
                 room.setStatus(RoomStatus.FULL);
+                // TODO: Full rooms don't show as full for some reason
             }
             if (occupancy == 0) {
                 room.setStatus(RoomStatus.EMPTY);
