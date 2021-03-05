@@ -341,7 +341,8 @@ public class University {
         do {
             input = inputSTR("0. Back to main menu.\n" +
                     "-1. Quit application.\n" +
-                    "\n");
+                    "\n" +
+                    "Input:");
             if (input.equals("-1") || input.equals("0")) {
                 BookingManager.refreshOrExit(input);
             }
@@ -473,14 +474,27 @@ public class University {
         this.bookings.add(newBooking);
     }
 
+    public void listScheduledBookings(Boolean withID) {
+        String formattedBookings = "\n| Booking ID | Assistant ID | Room | Student Email   | Time Slot     | Status    |\n";
+        int i = 1;
+        for (Booking booking : this.bookings) {
+            if (booking.getStatus().equals(BookingStatus.SCHEDULED)) {
+                formattedBookings += "| " + i + "          " + booking.toString() + "\n";
+                i++;
+            }
+        }
+        print(formattedBookings);
+    }
+
+
     public void removeBooking() {
          print("University of Knowledge - COVID test\n" +
                  "\n");
-         listScheduledBookings();
+         listScheduledBookings(true);
+         print("Removing booking from the system\n");
          String input = "";
          do {
-             input = inputSTR("Removing booking from the system\n" +
-                     "\n" +
+             input = inputSTR("\n" +
                      "Please, enter one of the following:\n" +
                      "\n" +
                      "The sequential ID to select the booking to be removed from the listed bookings above.\n" +
@@ -488,13 +502,47 @@ public class University {
                      "-1. Quit application.\n" +
                      "\n" +
                      "Input:");
-         } while (!"0".equals(input) || !"-1".equals(input));
-        BookingManager.refreshOrExit(input);
-
+             if ("0".equals(input) || "-1".equals(input)) {BookingManager.refreshOrExit(input);}
+             try {
+                 int ID = Integer.parseInt(input);
+                 Booking booking = this.bookings.get(ID);
+                 String removedBooking = "\n| Booking ID | Assistant ID | Room | Student Email   | Time Slot     |" +
+                         " Status    |\n";
+                 removedBooking += "| " + ID + "          " + booking.toString();
+                 this.bookings.remove(ID);
+                 print("\nBooking removed successfully:");
+                 print(removedBooking);
+             } catch (Exception e) {
+                 print("Invalid input entered, " + input +  " is not a valid ID from the list above");
+             }
+         } while (true);
     }
 
     public void concludeBooking() {
-        // TODO: concludeBooking()
+        print("University of Knowledge - COVID test\n");
+        listScheduledBookings(true);
+        print("Conclude booking");
+        do {
+            String input = inputSTR("\n" +
+                    "Please, enter one of the following:\n" +
+                    "\n" +
+                    "The sequential ID to select the booking to be removed from the listed bookings above.\n" +
+                    "0. Back to main menu.\n" +
+                    "-1. Quit application.\n" +
+                    "\n" +
+                    "Input:");
+            if ("0".equals(input) || "-1".equals(input)) {BookingManager.refreshOrExit(input);}
+            try {
+                int ID = Integer.parseInt(input);
+                Booking booking = this.bookings.get(ID);
+                booking.setStatus(BookingStatus.COMPLETED);
+                print("\n| Booking ID | Assistant ID | Room | Student Email   | Time Slot     |" +
+                        " Status    |\n" +
+                        "| " + ID + "          " +  booking.toString());
+            } catch (Exception e) {
+                print("Invalid input entered, " + input +  " is not a valid ID from the list above");
+            }
+        } while (true);
     }
 
     /**
