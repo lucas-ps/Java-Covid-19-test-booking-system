@@ -36,7 +36,7 @@ public class Assistant {
     // Methods
 
     /**
-     * Get/Set functions
+     * Get/Set methods
      */
     public int getID(){return this.ID;}
     public TimeSlot getShift() {return this.shift;}

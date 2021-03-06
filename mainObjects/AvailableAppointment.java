@@ -20,15 +20,10 @@ public class AvailableAppointment {
 
     // Methods
 
-    public TimeSlot getTimeSlot() {
-        return timeSlot;
-    }
-
-    public Room getRoom() {
-        return room;
-    }
-
-    public Assistant getAssistant() {
-        return assistant;
-    }
+    /**
+     * Get/Set methods
+     */
+    public TimeSlot getTimeSlot() {return timeSlot;}
+    public Room getRoom() {return room;}
+    public Assistant getAssistant() {return assistant;}
 }

@@ -32,30 +32,14 @@ public class Booking {
 
     // Methods
 
-
-    public BookingStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(BookingStatus status) {
-        this.status = status;
-    }
-
-    public Assistant getAssistantID() {
-        return this.assistantID;
-    }
-
-    public TimeSlot getTimeSlot() {
-        return this.timeSlot;
-    }
-
-    public Room getRoom() {
-        return this.room;
-    }
-
-    public String getStudentEmail() {
-        return studentEmail;
-    }
+    /**
+     * Get/Set methods
+     */
+    public BookingStatus getStatus() {return status;}
+    public void setStatus(BookingStatus status) {this.status = status;}
+    public Assistant getAssistantID() {return this.assistantID;}
+    public TimeSlot getTimeSlot() {return this.timeSlot;}
+    public Room getRoom() {return this.room;}
 
     /**
      * @return booking attributes in the form | <assistantID> | <room> | <studentEmail> | <timeSlot.getStartTime()> -

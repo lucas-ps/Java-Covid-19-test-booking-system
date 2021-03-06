@@ -33,29 +33,24 @@ public class Room {
     /**
      * Get/Set methods
      */
+    public String getCode() {return code;}
+    public int getCapacity() {return capacity;}
+    public void setStatus(RoomStatus status) {this.status = status;}
+    public RoomStatus getStatus() {return status;}
 
-    public String getCode() {
-        return code;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public void setStatus(RoomStatus status) {
-        this.status = status;
-    }
-
-    public RoomStatus getStatus() {
-        return status;
-    }
-
-    public void addTimeSlot(TimeSlot timeSlot) {
-        this.TimeSlotsAvailable.add(timeSlot);
+    /**
+     * @return string of room attributes in the form | <dd/mm/yyyy HH:MM> | <status> | <room_code> |
+     */
+    public String toString(){
+        LocalDateTime time = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        String formattedDateTime = time.format(formatter);
+        return String.format("| %-17s | %-9s | %-4s |",formattedDateTime, this.status ,this.code);
     }
 
     /**
-     * @return  room attributes in the form | <dd/mm/yyyy HH:MM> | <status> | <room_code> | <occupancy>/<capacity> |
+     * @return string of room attributes with occupancy in the form | <dd/mm/yyyy HH:MM> | <status> | <room_code>
+     *     | <occupancy>/<capacity> |
      */
     public String toString(int occupancy){
         LocalDateTime time = LocalDateTime.now();
@@ -64,10 +59,5 @@ public class Room {
         return String.format("| %-17s | %-9s | %-4s | %s/%-7s |",formattedDateTime, this.status ,this.code, occupancy, this.capacity);
     }
 
-    public String toString(){
-        LocalDateTime time = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        String formattedDateTime = time.format(formatter);
-        return String.format("| %-17s | %-9s | %-4s |",formattedDateTime, this.status ,this.code);
-    }
+
 }
