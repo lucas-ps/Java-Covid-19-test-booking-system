@@ -35,28 +35,21 @@ public class Assistant {
 
     // Methods
 
-    public int getID(){
-        return this.ID;
-    }
+    /**
+     * Get/Set functions
+     */
+    public int getID(){return this.ID;}
+    public TimeSlot getShift() {return this.shift;}
+    public AssistantStatus getStatus() {return this.status;}
+    public void setStatus(AssistantStatus status) {this.status = status;}
+    public void addWorkingDay(Date date) {this.DaysWorking.add(date);}
 
-    public void addWorkingDay(Date date) {
-        this.DaysWorking.add(date);
-    }
-
+    /**
+     * Removes a working day from the DaysWorking ArrayList
+     * @param date
+     */
     public void removeWorkingDay(Date date) {
         this.DaysWorking.remove(date);
-    }
-
-    public TimeSlot getShift() {
-        return this.shift;
-    }
-
-    public AssistantStatus getStatus() {
-        return this.status;
-    }
-
-    public void setStatus(AssistantStatus status) {
-        this.status = status;
     }
 
     /**
@@ -80,6 +73,4 @@ public class Assistant {
         return String.format("| %-2s | %-19s | %-20s | %s - %s | %s |", this.ID, this.name, this.email,
                 this.shift.getStartTime(), this.shift.getEndTime(), formattedDate);
     }
-
-
 }

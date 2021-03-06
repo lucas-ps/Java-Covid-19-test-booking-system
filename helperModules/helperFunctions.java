@@ -4,13 +4,11 @@ import java.util.Scanner;
 
 public class helperFunctions {
 
-    public static double inputDBL(String prompt){
-
-        Scanner input = new Scanner(System.in);
-        System.out.println(prompt);
-        return input.nextDouble();
-    }
-
+    /**
+     * Allows user to input a string, saves time while coding by reducing repeated code
+     * @param prompt The string prompt that will be printed to tell the user what to input
+     * @return the string version of the user's input
+     */
     public static String inputSTR(String prompt){
 
         Scanner input = new Scanner(System.in);
@@ -18,25 +16,12 @@ public class helperFunctions {
         return input.nextLine();
     }
 
-    public static int inputINT(String prompt){
-        Scanner input = new Scanner(System.in);
-        System.out.println(prompt);
-        return input.nextInt();
-    }
-
-    public static boolean inputBOOL(String prompt){
-        Scanner input = new Scanner(System.in);
-        System.out.println(prompt);
-        return input.nextBoolean();
-    }
-
+    /**
+     * Prints data provided, saves time while coding by reducing repeated code
+     * @param data the string, int or double that needs to be printed
+     */
     public static void print(String data){System.out.println(data);  }
     public static void print(int data){System.out.println(data);}
     public static void print(double data){System.out.println(data); }
-
-    public static String line(){
-        String line = ("----------");
-        return line;
-    }
 
 }
