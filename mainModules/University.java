@@ -112,10 +112,9 @@ public class University {
     }
 
     // To manage Bookable Rooms
-    // TODO: Fix formatting of first 3 methods in line with specification
 
     /**
-     * @return Formatted string with all bookable rooms and their details
+     * Prints formatted string with all bookable rooms and their details
      */
     public void formattedBookableRooms() {
         LocalDateTime now = LocalDateTime.now();
@@ -139,6 +138,9 @@ public class University {
         } while (true);
     }
 
+    /**
+     * Prints formatted string with all rooms (regardless of their status) and their details
+     */
     public void formattedAllRooms() {
         LocalDateTime now = LocalDateTime.now();
         String formattedBookableRooms = "| Current Date/Time | Status    | Code | Occupancy |\n";
@@ -148,6 +150,9 @@ public class University {
         print(formattedBookableRooms);
     }
 
+    /**
+     * Prints details for all rooms which have the EMPTY room status
+     */
     public void formattedEmptyRooms() {
         LocalDateTime now = LocalDateTime.now();
         String formattedBookableRooms = "| Current Date/Time | Status    | Code | Occupancy |\n";
@@ -295,7 +300,7 @@ public class University {
 
     /**
      * Prints all assistants, regardless of status in the form | <ID> | <Name> | <Email> | <Status>
-     *      *     | <shift.getStartTime()> - <shift.getEndTime()> |
+     *           | <shift.getStartTime()> - <shift.getEndTime()> |
      */
     public void formattedAllAssistants() {
         String formattedAvailableAssistants = "| ID | Name                | Email                | Status       " +
@@ -394,7 +399,7 @@ public class University {
     // To manage Bookings
 
     /**
-     *
+     * Menu which calls listAllBookings(), listScheduledBookings() or listCompletedBookings() based on user input
      */
     public void formattedBookings() {
         print("University of Knowledge - COVID test\n" +
@@ -435,6 +440,9 @@ public class University {
         } while (true);
     }
 
+    /**
+     * Prints all bookings and their details
+     */
     public void listAllBookings() {
         String formattedBookings = "\n| Assistant ID | Room | Student Email   | Time Slot     | Status    |\n";
         for (Booking booking : this.bookings) {
@@ -443,6 +451,9 @@ public class University {
         print(formattedBookings);
     }
 
+    /**
+     * Prints all bookings and their details where the booking status is 'SCHEDULED'
+     */
     public void listScheduledBookings() {
         String formattedBookings = "\n| Assistant ID | Room | Student Email   | Time Slot     | Status    |\n";
         for (Booking booking : this.bookings) {
@@ -453,6 +464,9 @@ public class University {
         print(formattedBookings);
     }
 
+    /**
+     * Prints all bookings and their details where the booking status is 'COMPLETED'
+     */
     public void listCompletedBookings() {
         String formattedBookings = "\n| Assistant ID | Room | Student Email   | Time Slot     | Status    |\n";
         for (Booking booking : this.bookings) {
@@ -463,6 +477,9 @@ public class University {
         print(formattedBookings);
     }
 
+    /**
+     * Checks available timeslots and adds a bookijg in based on user input
+     */
     public void addBooking() {
         print("University of Knowledge - COVID test\n" +
                 "\n" +
@@ -506,6 +523,10 @@ public class University {
         } while (true);
     }
 
+    /**
+     * Works out the five soonest available appointments for making a new booking
+     * @return ArrayList<AvailableAppointment> - an ArrayList of the five soonest available appointments
+     */
     public ArrayList<AvailableAppointment> AvailableTimeslots() {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime roundedTime = roundedTime(now).plusMinutes(15);
@@ -561,6 +582,11 @@ public class University {
         this.bookings.add(newBooking);
     }
 
+    /**
+     * Same as listScheduledBookings except it formats scheduled bookings with an IS so that they can be selected
+     * and removed
+     * @param withID parameter to run this method instead of listScheduledBookings()
+     */
     public void listScheduledBookings(Boolean withID) {
         String formattedBookings = "\n| Booking ID | Assistant ID | Room | Student Email   | Time Slot     | Status    |\n";
         int i = 1;
@@ -574,6 +600,9 @@ public class University {
     }
 
 
+    /**
+     * Removes booking from bookings arraylist based on user input
+     */
     public void removeBooking() {
          print("University of Knowledge - COVID test\n" +
                  "\n");
@@ -605,6 +634,9 @@ public class University {
          } while (true);
     }
 
+    /**
+     * Sets a booking's BookingStatus to 'COMPLETED'
+     */
     public void concludeBooking() {
         print("University of Knowledge - COVID test\n");
         listScheduledBookings(true);
