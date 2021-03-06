@@ -49,7 +49,7 @@ public class BookingManager {
          * Lists all options and processed user input so that the relevant function can be executed
          */
         System.out.flush();
-        int option = inputINT("University of Knowledge - COVID test\n" +
+        String option = inputSTR("University of Knowledge - COVID test\n" +
                 "\n" +
                 "Manage Bookings\n" +
                 "\n" +
@@ -73,23 +73,21 @@ public class BookingManager {
                 "Press -1 (or ctrl+c) to quit this application.\n" +
                 "\n" +
                 "Input: ");
-
-        while (option > 10 | option < -1){
-            option = inputINT(option + " is not a valid option. Please enter a valid option\n");
-        }
-
-        if (option == 0) mainMenu(university);
-        else if (option == 1) university.formattedBookableRooms();
-        else if (option == 2) university.addRoom();
-        else if (option == 3) university.removeRoom();
-        else if (option == 4) university.formattedAvailableAssistants();
-        else if (option == 5) university.addAssistant();
-        else if (option == 6) university.removeAssistant();
-        else if (option == 7) university.formattedBookings();
-        else if (option == 8) university.addBooking();
-        else if (option == 9) university.removeBooking();
-        else if (option == 10) university.concludeBooking();
-        else if (option == -1) System.exit(0);
+        do {
+            if (option.equals("0")) mainMenu(university);
+            else if (option.equals("1")) university.formattedBookableRooms();
+            else if (option.equals("2")) university.addRoom();
+            else if (option.equals("3")) university.removeRoom();
+            else if (option.equals("4")) university.formattedAvailableAssistants();
+            else if (option.equals("5")) university.addAssistant();
+            else if (option.equals("6")) university.removeAssistant();
+            else if (option.equals("7")) university.formattedBookings();
+            else if (option.equals("8")) university.addBooking();
+            else if (option.equals("9")) university.removeBooking();
+            else if (option.equals("10")) university.concludeBooking();
+            else if (option.equals("-1")) System.exit(0);
+            else option = inputSTR(option + " is not a valid option. Please enter a valid option\n");
+        } while (true);
 
         /**
          *Allows the user to choose whether they ant to go back to the main menu or end the program after executing

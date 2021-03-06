@@ -252,6 +252,9 @@ public class University {
      *     | <shift.getStartTime()> - <shift.getEndTime()> |
      */
     public void formattedAvailableAssistants() {
+        print("University of Knowledge - COVID test\n" +
+                "\n" +
+                "List all assistants on shift");
         LocalDateTime now = LocalDateTime.now();
         String formattedAvailableAssistants = "| ID | Name                | Email                | Status " +
                 "| Shift               |\n";
@@ -261,6 +264,17 @@ public class University {
             }
         }
         print(formattedAvailableAssistants);
+        do {
+            String input = inputSTR("Please, enter the following:\n" +
+                    "\n" +
+                    "0. Back to main menu.\n" +
+                    "-1. Quit application.\n" +
+                    "\n" +
+                    "Input:");
+            if (input.equals("-1") || input.equals("0")) {
+                BookingManager.refreshOrExit(input);
+            } else print(input + " is not a valid input.");
+        } while (true);
     }
 
     /**
@@ -269,8 +283,8 @@ public class University {
      */
     public void formattedFreeAssistants() {
         LocalDateTime now = LocalDateTime.now();
-        String formattedFreeAssistants = "| ID | Name                | Email                | Status " +
-                "| Shift               |\n";
+        String formattedFreeAssistants = "| ID | Name                | Email                | Status       " +
+                "| Shift         |\n";
         for (Assistant assistant : assistants) {
             if (AssistantStatus.FREE.equals(assistant.getStatus())) {
                 formattedFreeAssistants += assistant.toString() + "\n";
@@ -359,24 +373,22 @@ public class University {
                     "-1. Quit application.\n" +
                     "\n" +
                     "Input:");
+            if (input.equals("-1") || input.equals("0")) {
+                BookingManager.refreshOrExit(input);
+            }
             try {
                 int ID = Integer.parseInt(input);
                 Assistant assistant = getAssistant(ID);
                 assistant.removeWorkingDay(Calendar.getInstance().getTime());
                 assistant.setStatus(AssistantStatus.NOT_ON_SHIFT);
                 print("Assistant on Shift removed successfully:\n");
-                print("| ID | Name                | Email                | Status       | Previous shift      |\n"
+                print("| ID | Name                | Email                | Status       | Previous shift|\n"
                         + assistant.toString());
-                input = inputSTR("\n0. Back to main menu.\n" +
-                        "-1. Quit application.\n" +
-                        "\n" +
-                        "Input:");
+
             } catch (Exception e){
                 print("Invalid input, ID was not found and no assistant has been removed from shift");
-                e.printStackTrace();
             }
-        } while (!"0".equals(input) || !"-1".equals(input));
-        BookingManager.refreshOrExit(input);
+        } while (true);
     }
 
     // To manage Bookings
@@ -472,6 +484,9 @@ public class University {
                     "-1. Quit application.\n" +
                     "\n" +
                     "Input:");
+            if (input.equals("-1") || input.equals("0")) {
+                BookingManager.refreshOrExit(input);
+            }
             String[] split = input.split(" ");
             // TODO: Validate emails
             try {
@@ -488,8 +503,7 @@ public class University {
                 print("Invalid input, input must be in the format 'ID student@UoK.ac.uk'");
                 //e.printStackTrace();
             }
-        } while (!"0".equals(input) || !"-1".equals(input));
-        BookingManager.refreshOrExit(input);
+        } while (true);
     }
 
     public ArrayList<AvailableAppointment> AvailableTimeslots() {
@@ -564,7 +578,7 @@ public class University {
          print("University of Knowledge - COVID test\n" +
                  "\n");
          listScheduledBookings(true);
-         print("Removing booking from the system\n");
+         print("Removing booking from the system");
          String input = "";
          do {
              input = inputSTR("\n" +
@@ -649,7 +663,6 @@ public class University {
             int occupancy = getRoomOccupancy(room, now);
             if (occupancy == room.getCapacity()) {
                 room.setStatus(RoomStatus.FULL);
-                // TODO: Full rooms don't show as full for some reason
             }
             if (occupancy == 0) {
                 room.setStatus(RoomStatus.EMPTY);
