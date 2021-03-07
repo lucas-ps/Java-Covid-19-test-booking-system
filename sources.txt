@@ -1,0 +1,11 @@
+helperModules\AssistantStatus.java
+helperModules\BookingStatus.java
+helperModules\helperFunctions.java
+helperModules\RoomStatus.java
+helperModules\TimeSlot.java
+mainModules\BookingManager.java
+mainModules\University.java
+mainObjects\Assistant.java
+mainObjects\AvailableAppointment.java
+mainObjects\Booking.java
+mainObjects\Room.java
