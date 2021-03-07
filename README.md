@@ -7,7 +7,7 @@ assistants, rooms and bookings.
 
 ## Usage
 
-To compile files, open the maid directory in CMD or terminal then run:
+To compile files, open the main directory in CMD or terminal then run:
 
 #### Linux / MacOS
 `find -name "*.java" > sources.txt`
