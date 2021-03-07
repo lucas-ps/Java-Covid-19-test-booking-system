@@ -11,7 +11,7 @@ To compile files, open the UoKCovid19TestBookingSystem directory in CMD or termi
 
 `javac @sources.txt`
 
-If this doesnt work, try re-maaking the sources file by doing:
+If this doesnt work, try re-making the sources file by doing:
 
 #### Linux / MacOS
 `find -name "*.java" > sources.txt`
