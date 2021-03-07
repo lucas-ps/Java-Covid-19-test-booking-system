@@ -7,7 +7,7 @@ assistants, rooms and bookings.
 
 ## Usage
 
-To compile files, open the main directory in CMD or terminal then run: 
+To compile files, open the UoKCovid19TestBookingSystem directory in CMD or terminal then run: 
 
 `javac @sources.txt`
 
@@ -20,7 +20,7 @@ If this doesnt work, try re-maaking the sources file by doing:
 `dir /s /B *.java > sources.txt`
 `javac @sources.txt`
 
-To run program, run the java file called BookingManager in the mainModules, you can do this by opening the main 
+To run program, run the java file called BookingManager in the mainModules, you can do this by opening the UoKCovid19TestBookingSystem 
 directory in CMD/terminal then running
 
 `java UoKCovid19TestBookingSystem.mainModules.BookingManager`
