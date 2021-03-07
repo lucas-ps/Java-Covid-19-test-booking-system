@@ -8,6 +8,7 @@ assistants, rooms and bookings.
 ## Usage
 
 To compile files, open the main directory in CMD or terminal then run: 
+
 `javac @sources.txt`
 
 If this doesnt work, try re-maaking the sources file by doing:
