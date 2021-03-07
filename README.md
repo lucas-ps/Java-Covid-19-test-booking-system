@@ -23,7 +23,7 @@ If this doesnt work, try re-maaking the sources file by doing:
 To run program, run the java file called BookingManager in the mainModules, you can do this by opening the main 
 directory in CMD/terminal then running
 
-`java mainModules/BookingManager`
+`java UoKCovid19TestBookingSystem.mainModules.BookingManager`
 
 Data has been hard-coded in for testing purposes using the populateBookings(), populateRooms() and populateAssistants() 
 methods in the University.java file.
