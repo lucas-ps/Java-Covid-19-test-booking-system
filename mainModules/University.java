@@ -478,7 +478,7 @@ public class University {
     }
 
     /**
-     * Checks available timeslots and adds a bookijg in based on user input
+     * Checks available timeslots and adds a booking in based on user input
      */
     public void addBooking() {
         print("University of Knowledge - COVID test\n" +
@@ -505,7 +505,6 @@ public class University {
                 BookingManager.refreshOrExit(input);
             }
             String[] split = input.split(" ");
-            // TODO: Validate emails
             try {
                 int index = Integer.parseInt(split[0]) - 11;
                 AvailableAppointment chosenAppointment = availableTimeSlots.get(index);

@@ -10,7 +10,6 @@ import static UoKCovid19TestBookingSystem.helperModules.helperFunctions.*;
 
 public class BookingManager {
 
-    // TODO: Validate inputs
     static University UoK;
 
     /**
@@ -90,11 +89,10 @@ public class BookingManager {
         } while (true);
 
         /**
-         *Allows the user to choose whether they ant to go back to the main menu or end the program after executing
+         *Allows the user to choose whether they want to go back to the main menu or end the program after executing
          * one of the above functions
          */
         }
-
     public static void refreshOrExit(String input) {
         if (input.equals("0")) {
             mainMenu(UoK);
