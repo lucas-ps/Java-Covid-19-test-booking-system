@@ -19,7 +19,7 @@ If this doesnt work, try re-maaking the sources file by doing:
 `dir /s /B *.java > sources.txt`
 `javac @sources.txt`
 
-To run system, run the java file called BookingManager in the mainModules, you can do this by opening the main 
+To run program, run the java file called BookingManager in the mainModules, you can do this by opening the main 
 directory in CMD/terminal then running
 
 `java mainModules/BookingManager`
